@@ -4,21 +4,62 @@ import type { HTMLAttributes } from 'astro/types';
 type Props = HTMLAttributes<'a'>;
 
 const { href, class: className, ...props } = Astro.props;
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
+
+const base = import.meta.env.BASE_URL || '/';
+
+// Normalize internal paths for reliable active matching under a base path
+function normalizePath(input?: string) {
+  if (!input) return '';
+  // Do not attempt to mark external links as active
+  if (/^https?:\/\//i.test(input)) return input;
+
+  let p = input;
+
+  // Strip base prefix from href if present
+  if (base !== '/' && p.startsWith(base)) p = p.slice(base.length);
+
+  // Ensure leading slash
+  if (!p.startsWith('/')) p = `/${p}`;
+
+  // Remove trailing slash (except root)
+  if (p.length > 1 && p.endsWith('/')) p = p.slice(0, -1);
+
+  return p;
+}
+
+function normalizeCurrentPath(input: string) {
+  let p = input;
+
+  // Strip base prefix from current pathname if present
+  if (base !== '/' && p.startsWith(base)) p = p.slice(base.length);
+
+  if (!p.startsWith('/')) p = `/${p}`;
+  if (p.length > 1 && p.endsWith('/')) p = p.slice(0, -1);
+
+  return p;
+}
+
+const currentPath = normalizeCurrentPath(Astro.url.pathname);
+const hrefPath = normalizePath(typeof href === 'string' ? href : '');
+
+// Highlight parent section when inside nested routes
+const segments = currentPath.split('/').filter(Boolean);
+const topLevel = segments.length ? `/${segments[0]}` : '/';
+
+const isActive = hrefPath && (hrefPath === currentPath || hrefPath === topLevel);
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>
-	<slot />
+  <slot />
 </a>
+
 <style>
-	a {
-		display: inline-block;
-		text-decoration: none;
-	}
-	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
-	}
+  a {
+    display: inline-block;
+    text-decoration: none;
+  }
+  a.active {
+    font-weight: bolder;
+    text-decoration: underline;
+  }
 </style>

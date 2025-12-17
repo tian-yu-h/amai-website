@@ -37,7 +37,7 @@ const { title, description, pubDate, updatedDate, heroImage, showHeader = true, 
 		  datePublished: pubDate ? new Date(pubDate).toISOString() : undefined,
 		  dateModified: updatedDate ? new Date(updatedDate).toISOString() : undefined,
 		  author: [{ '@type': 'Person', name: Astro.props.author || 'Site Author' }],
-		  publisher: { '@type': 'Organization', name: 'guihubie.com' },
+		  publisher: { '@type': 'Organization', name: 'Amai Consulting' },
 		  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).toString(),
 		  url: new URL(Astro.url.pathname, Astro.site).toString(),
 		})} />
@@ -123,7 +123,7 @@ const { title, description, pubDate, updatedDate, heroImage, showHeader = true, 
                         </div>
                     )}
                     <ShareButtons title={title} url={Astro.url.toString()} />
-					<PostMeta pubDate={pubDate} readingTimeMin={readingTimeMin} authorName={Astro.props.author || 'Site Author'} />
+					<PostMeta pubDate={pubDate} readingTimeMin={readingTimeMin} authorName={Astro.props.author || 'Tian Yu'} />
                     <slot />
                     <PostNav prev={prevPost} next={nextPost} />
                 </div>
