@@ -4,66 +4,160 @@ import Footer from '../components/sections/Footer.astro';
 import Header from '../components/sections/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import HeroSection from '../components/sections/HeroSection.astro';
-import SkillsSection from '../components/sections/SkillsSection.astro';
-import { skills } from '../data/skills';
-import WorkExperience from '../components/sections/WorkExperience.astro';
-import { work } from '../data/work';
-import Studies from '../components/sections/Studies.astro';
-import { studies } from '../data/studies';
-import Carousel from '../components/ui/carousel/Carousel.astro';
-import { logos } from '../data/logos';
-import ArrowSeparator from '../components/ui/separator/ArrowSeparator.astro'
-import GlowLineSeparator from '../components/ui/separator/GlowLineSeparator.astro'
 
-// Logos
-import astroLogo from '../assets/logos/Astro-logo.svg';
-import googleAdsLogo from '../assets/logos/GoogleAds-logo.svg';
-import posthogLogo from '../assets/logos/posthog-logo.svg';
-import notionLogo from '../assets/logos/Notion-logo.svg';
-import figmaLogo from '../assets/logos/Figma-logo.svg';
-
-// skills are imported from src/data/skills
+import ArrowSeparator from '../components/ui/separator/ArrowSeparator.astro';
+import GlowLineSeparator from '../components/ui/separator/GlowLineSeparator.astro';
 ---
 
 <!doctype html>
 <html lang="en" data-theme="dark" class="dark">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <!-- JSON-LD: Organization -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: 'Site Author',
-      url: new URL('/', Astro.site).toString(),
-      logo: new URL('/favicon.svg', Astro.site).toString(),
-      sameAs: [
-        'https://x.com/guihubie',
-        'https://www.linkedin.com/in/guilherme-hubie/',
-      ],
-    })} />
-	</head>
-	<body>
-		<Header />
-		<main>
-      <HeroSection
-        title="Your Headline Goes Here!"
-        subtitle="I build softwares that brings you loyal subscribers."
-        showCTA
-        primaryCTA={{ text: 'View Projects', href: '/portfolio' }}
-        secondaryCTA={{ text: 'Read Blog', href: '/blog' }}
-      />
-     
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 
-    <section class="py-6">
-      <ArrowSeparator />
-      <SkillsSection title="Skills & Tools" skills={skills} />   
-      <ArrowSeparator />
-      <WorkExperience title="Work Experience" items={work} />
-      <ArrowSeparator />
-      <Studies title="Studies" items={studies} />
-      <GlowLineSeparator />
-    </section>
-		</main>
-		<Footer />
-	</body>
+    <!-- JSON-LD: Organization -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Amai Consulting LLC', // placeholder
+        url: new URL('/', Astro.site).toString(),
+        logo: new URL('/amailogo.svg', Astro.site).toString(), // update later if you have a logo asset
+        sameAs: [
+          // Add your links (placeholders for now)
+          'https://www.linkedin.com/in/tianyu1037/',
+          // 'https://x.com/<your-handle>',
+        ],
+      })}
+    />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <HeroSection
+        title="Ground AI in Human Experience"
+        subtitle="Unlock unique opportunities from authentic consumer insights powered by behavioral science and modern analytics."
+        showCTA
+        primaryCTA={{ text: 'Contact', href: '/contact' }}
+        secondaryCTA={{ text: 'View Services', href: '/services' }}
+      />
+
+      <section class="py-6">
+        <ArrowSeparator />
+
+        <!-- Services snapshot -->
+        <div class="mx-auto max-w-6xl px-4 py-10">
+          <h2 class="text-2xl font-semibold">What I do</h2>
+          <p class="mt-2 max-w-2xl text-[color:var(--color-text-secondary)]">
+            Consulting engagements that blend sensory science rigor with modern analytics and automation. (Placeholder)
+          </p>
+
+          <div class="mt-8 grid gap-6 md:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 p-6">
+              <h3 class="font-semibold">Sensory & consumer analytics</h3>
+              <p class="mt-2 text-[color:var(--color-text-secondary)]">
+                Study design support, panel data analysis, drivers of liking, segmentation, and client-ready reporting.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 p-6">
+              <h3 class="font-semibold">Physiological & behavioral signals</h3>
+              <p class="mt-2 text-[color:var(--color-text-secondary)]">
+                HR/HRV, GSR, synchronized response metrics, and storytelling-ready time-series visualizations.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 p-6">
+              <h3 class="font-semibold">AI for insights workflows</h3>
+              <p class="mt-2 text-[color:var(--color-text-secondary)]">
+                Review mining, topic modeling, RAG knowledge bases, and reusable analysis pipelines.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <ArrowSeparator />
+
+        <!-- How it works -->
+        <div class="mx-auto max-w-6xl px-4 py-10">
+          <h2 class="text-2xl font-semibold">How engagements work</h2>
+          <p class="mt-2 max-w-2xl text-[color:var(--color-text-secondary)]">
+            A lightweight, decision-focused process designed for speed and clarity. (Placeholder)
+          </p>
+
+          <div class="mt-8 grid gap-6 md:grid-cols-4">
+            <div class="rounded-2xl border border-white/10 p-6">
+              <p class="text-sm text-[color:var(--color-text-secondary)]">01</p>
+              <h3 class="mt-2 font-semibold">Align on the decision</h3>
+              <p class="mt-2 text-[color:var(--color-text-secondary)]">
+                Define the business question, constraints, and what “good” looks like.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 p-6">
+              <p class="text-sm text-[color:var(--color-text-secondary)]">02</p>
+              <h3 class="mt-2 font-semibold">Audit the data</h3>
+              <p class="mt-2 text-[color:var(--color-text-secondary)]">
+                Validate signal quality, structure, and the analysis plan.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 p-6">
+              <p class="text-sm text-[color:var(--color-text-secondary)]">03</p>
+              <h3 class="mt-2 font-semibold">Analyze & synthesize</h3>
+              <p class="mt-2 text-[color:var(--color-text-secondary)]">
+                Run analyses and translate results into clear, defensible insights.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 p-6">
+              <p class="text-sm text-[color:var(--color-text-secondary)]">04</p>
+              <h3 class="mt-2 font-semibold">Deliver & enable</h3>
+              <p class="mt-2 text-[color:var(--color-text-secondary)]">
+                Provide a report, visuals, and reusable templates or code as needed.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <ArrowSeparator />
+
+        <!-- Proof / credibility placeholder -->
+        <div class="mx-auto max-w-6xl px-4 py-10">
+          <h2 class="text-2xl font-semibold">Trusted partner for product teams</h2>
+          <p class="mt-2 max-w-3xl text-[color:var(--color-text-secondary)]">
+            Placeholder for client logos, outcomes, or a short credibility paragraph. Consider adding:
+            "Selected clients" + 2 to 3 quantified results (time saved, accuracy improved, decision speed, etc.).
+          </p>
+        </div>
+
+        <GlowLineSeparator />
+      </section>
+
+      <!-- Final CTA -->
+      <section class="py-16">
+        <div class="mx-auto max-w-6xl px-4">
+          <div class="rounded-2xl border border-white/10 p-8 md:flex md:items-center md:justify-between">
+            <div class="max-w-2xl">
+              <h2 class="text-2xl font-semibold">Let's discuss your next project</h2>
+              <p class="mt-2 text-[color:var(--color-text-secondary)]">
+                Send a brief note with your timeline, what data you have, and the decision you need to make. (Placeholder)
+              </p>
+            </div>
+
+            <div class="mt-6 md:mt-0">
+              <a class="inline-flex items-center justify-center rounded-xl px-5 py-3 border border-white/10 hover:border-white/20"
+                 href="/contact">
+                Contact
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
 </html>
