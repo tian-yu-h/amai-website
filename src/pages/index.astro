@@ -1,163 +1,101 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/sections/Footer.astro';
-import Header from '../components/sections/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import HeroSection from '../components/sections/HeroSection.astro';
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { getCollection } from "astro:content";
 
-import ArrowSeparator from '../components/ui/separator/ArrowSeparator.astro';
-import GlowLineSeparator from '../components/ui/separator/GlowLineSeparator.astro';
+// Fetch blog posts safely
+let recentPosts = [];
+try {
+  const posts = await getCollection("blog");
+  const sortedPosts = posts.sort(
+    (a, b) => new Date(b.data.pubDatetime).valueOf() - new Date(a.data.pubDatetime).valueOf()
+  );
+  recentPosts = sortedPosts.slice(0, 3);
+} catch (e) {
+  console.log("No blog posts found yet.");
+}
 ---
 
-<!doctype html>
-<html lang="en" data-theme="dark" class="dark">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+<Layout>
+  <Header />
 
-    <!-- JSON-LD: Organization -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: 'Amai Consulting LLC', // placeholder
-        url: new URL('/', Astro.site).toString(),
-        logo: new URL('/amailogo.svg', Astro.site).toString(), // update later if you have a logo asset
-        sameAs: [
-          // Add your links (placeholders for now)
-          'https://www.linkedin.com/in/tianyu1037/',
-          // 'https://x.com/<your-handle>',
-        ],
-      })}
-    />
-  </head>
+  <main id="main-content" class="use-utility-layout max-w-6xl mx-auto px-4">
+    
+    <!-- SECTION 1: HERO -->
+    <section id="hero" class="pt-24 pb-16">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-6 text-skin-base tracking-tight leading-tight">
+        Bridging Sensory Science <br class="hidden sm:block" />& Artificial Intelligence.
+      </h1>
+      <p class="text-lg mb-10 text-skin-muted leading-relaxed max-w-2xl">
+        I help F&B and CPG companies assess digital readiness and discover opportunities through authentic consumer insights. 
+        <span class="block mt-2 font-medium text-skin-base">No hype, just grounded science.</span>
+      </p>
+      
+      <div class="flex flex-wrap gap-4">
+        <a href="mailto:your-email@example.com" 
+           class="px-6 py-3 bg-skin-accent text-skin-inverted rounded-md font-medium hover:opacity-90 transition shadow-sm">
+           Contact Me
+        </a>
+        <a href="https://linkedin.com/in/yourprofile" 
+           target="_blank"
+           class="px-6 py-3 border border-skin-line text-skin-base rounded-md font-medium hover:bg-skin-card-muted transition">
+           LinkedIn
+        </a>
+      </div>
+    </section>
 
-  <body>
-    <Header />
+    <hr class="border-skin-line my-12 opacity-50" />
 
-    <main>
-      <HeroSection
-        title="Ground AI in Human Experience"
-        subtitle="Unlock unique opportunities from authentic consumer insights powered by behavioral science and modern analytics."
-        showCTA
-        primaryCTA={{ text: 'Contact', href: '/contact' }}
-        secondaryCTA={{ text: 'View Services', href: '/services' }}
-      />
-
-      <section class="py-6">
-        <ArrowSeparator />
-
-        <!-- Services snapshot -->
-        <div class="mx-auto max-w-6xl px-4 py-10">
-          <h2 class="text-2xl font-semibold">What I do</h2>
-          <p class="mt-2 max-w-2xl text-[color:var(--color-text-secondary)]">
-            Consulting engagements that blend sensory science rigor with modern analytics and automation. (Placeholder)
-          </p>
-
-          <div class="mt-8 grid gap-6 md:grid-cols-3">
-            <div class="rounded-2xl border border-white/10 p-6">
-              <h3 class="font-semibold">Sensory & consumer analytics</h3>
-              <p class="mt-2 text-[color:var(--color-text-secondary)]">
-                Study design support, panel data analysis, drivers of liking, segmentation, and client-ready reporting.
-              </p>
-            </div>
-
-            <div class="rounded-2xl border border-white/10 p-6">
-              <h3 class="font-semibold">Physiological & behavioral signals</h3>
-              <p class="mt-2 text-[color:var(--color-text-secondary)]">
-                HR/HRV, GSR, synchronized response metrics, and storytelling-ready time-series visualizations.
-              </p>
-            </div>
-
-            <div class="rounded-2xl border border-white/10 p-6">
-              <h3 class="font-semibold">AI for insights workflows</h3>
-              <p class="mt-2 text-[color:var(--color-text-secondary)]">
-                Review mining, topic modeling, RAG knowledge bases, and reusable analysis pipelines.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <ArrowSeparator />
-
-        <!-- How it works -->
-        <div class="mx-auto max-w-6xl px-4 py-10">
-          <h2 class="text-2xl font-semibold">How engagements work</h2>
-          <p class="mt-2 max-w-2xl text-[color:var(--color-text-secondary)]">
-            A lightweight, decision-focused process designed for speed and clarity. (Placeholder)
-          </p>
-
-          <div class="mt-8 grid gap-6 md:grid-cols-4">
-            <div class="rounded-2xl border border-white/10 p-6">
-              <p class="text-sm text-[color:var(--color-text-secondary)]">01</p>
-              <h3 class="mt-2 font-semibold">Align on the decision</h3>
-              <p class="mt-2 text-[color:var(--color-text-secondary)]">
-                Define the business question, constraints, and what “good” looks like.
-              </p>
-            </div>
-
-            <div class="rounded-2xl border border-white/10 p-6">
-              <p class="text-sm text-[color:var(--color-text-secondary)]">02</p>
-              <h3 class="mt-2 font-semibold">Audit the data</h3>
-              <p class="mt-2 text-[color:var(--color-text-secondary)]">
-                Validate signal quality, structure, and the analysis plan.
-              </p>
-            </div>
-
-            <div class="rounded-2xl border border-white/10 p-6">
-              <p class="text-sm text-[color:var(--color-text-secondary)]">03</p>
-              <h3 class="mt-2 font-semibold">Analyze & synthesize</h3>
-              <p class="mt-2 text-[color:var(--color-text-secondary)]">
-                Run analyses and translate results into clear, defensible insights.
-              </p>
-            </div>
-
-            <div class="rounded-2xl border border-white/10 p-6">
-              <p class="text-sm text-[color:var(--color-text-secondary)]">04</p>
-              <h3 class="mt-2 font-semibold">Deliver & enable</h3>
-              <p class="mt-2 text-[color:var(--color-text-secondary)]">
-                Provide a report, visuals, and reusable templates or code as needed.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <ArrowSeparator />
-
-        <!-- Proof / credibility placeholder -->
-        <div class="mx-auto max-w-6xl px-4 py-10">
-          <h2 class="text-2xl font-semibold">Trusted partner for product teams</h2>
-          <p class="mt-2 max-w-3xl text-[color:var(--color-text-secondary)]">
-            Placeholder for client logos, outcomes, or a short credibility paragraph. Consider adding:
-            "Selected clients" + 2 to 3 quantified results (time saved, accuracy improved, decision speed, etc.).
+    <!-- SECTION 2: SERVICES -->
+    <section id="services" class="py-8">
+      <h2 class="text-2xl font-bold mb-8 text-skin-base">Consulting Services</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-xl border border-skin-line bg-skin-card hover:border-skin-accent transition-colors duration-300">
+          <h3 class="text-lg font-bold mb-3 text-skin-accent">AI Readiness</h3>
+          <p class="mb-4 text-sm text-skin-muted leading-relaxed">
+            Navigating the noise of AI services specifically for the Food & Beverage industry. 
           </p>
         </div>
 
-        <GlowLineSeparator />
-      </section>
-
-      <!-- Final CTA -->
-      <section class="py-16">
-        <div class="mx-auto max-w-6xl px-4">
-          <div class="rounded-2xl border border-white/10 p-8 md:flex md:items-center md:justify-between">
-            <div class="max-w-2xl">
-              <h2 class="text-2xl font-semibold">Let's discuss your next project</h2>
-              <p class="mt-2 text-[color:var(--color-text-secondary)]">
-                Send a brief note with your timeline, what data you have, and the decision you need to make. (Placeholder)
-              </p>
-            </div>
-
-            <div class="mt-6 md:mt-0">
-              <a class="inline-flex items-center justify-center rounded-xl px-5 py-3 border border-white/10 hover:border-white/20"
-                 href="/contact">
-                Contact
-              </a>
-            </div>
-          </div>
+        <div class="p-6 rounded-xl border border-skin-line bg-skin-card hover:border-skin-accent transition-colors duration-300">
+          <h3 class="text-lg font-bold mb-3 text-skin-accent">Sensory Insights</h3>
+          <p class="mb-4 text-sm text-skin-muted leading-relaxed">
+            Discover opportunities from authentic consumer languages and behavior science.
+          </p>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
 
-    <Footer />
-  </body>
-</html>
+    <hr class="border-skin-line my-12 opacity-50" />
+
+    <!-- SECTION 3: CASE STUDIES -->
+    <section id="recent-posts" class="pb-24">
+      <div class="flex justify-between items-baseline mb-8">
+        <h2 class="text-2xl font-bold text-skin-base">Case Studies</h2>
+        <a href="/blog" class="text-sm font-semibold text-skin-accent hover:underline decoration-2 underline-offset-4">
+          View All &rarr;
+        </a>
+      </div>
+      <!-- Case Study List Code Here (Same as before) -->
+      <div class="space-y-6">
+        {recentPosts.length > 0 ? (
+          recentPosts.map((post) => (
+            <a href={`/blog/${post.slug}/`} class="group block">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-skin-line group-hover:border-skin-accent transition-colors">
+                <h3 class="text-lg font-medium text-skin-base group-hover:text-skin-accent transition-colors">
+                  {post.data.title}
+                </h3>
+              </div>
+            </a>
+          ))
+        ) : (
+          <p class="text-skin-muted italic">Research in progress.</p>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

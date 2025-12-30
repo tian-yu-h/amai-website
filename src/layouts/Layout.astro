@@ -1,0 +1,25 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+
+// 1. Define the props (inputs) this layout accepts
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "Amai Consulting", description = "Sensory Science & AI Readiness" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- 2. Use the existing BaseHead component for SEO/Fonts -->
+    <BaseHead title={title} description={description} />
+  </head>
+  <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans antialiased">
+    
+    <!-- 3. The <slot /> is where your page content gets injected -->
+    <slot />
+    
+  </body>
+</html>
