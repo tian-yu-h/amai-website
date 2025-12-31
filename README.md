@@ -4,14 +4,65 @@ This is the official website for Amai Consulting LLC, built with Astro and Tailw
 
 ## 🚀 Project Structure
 
-The project is structured as follows:
+```
+.
+├───.gitignore
+├───astro.config.mjs
+├───LICENSE
+├───netlify.toml
+├───package-lock.json
+├───package.json
+├───README.md
+├───starwind.config.json
+├───tsconfig.json
+├───.github/
+│   └───workflows/
+│       └───deploy.yml
+├───.vscode/
+│   ├───extensions.json
+│   └───launch.json
+├───public/
+│   ├───amailogo.png
+│   ├───amailogo.svg
+│   ├───favicon.png
+│   ├───favicon.svg
+│   ├───robots.txt
+│   └───fonts/
+│       ├───atkinson-bold.woff
+│       └───atkinson-regular.woff
+└───src/
+    ├───consts.ts
+    ├───content.config.ts
+    ├───assets/
+    │   ├───icons/...
+    │   ├───images/...
+    │   └───logos/...
+    ├───components/
+    │   ├───BaseHead.astro
+    │   ├───FormattedDate.astro
+    │   ├───sections/...
+    │   └───ui/...
+    ├───content/
+    │   └───blog/...
+    ├───data/
+    │   ├───author.ts
+    │   ├───caseStudies.ts
+    │   ├───categories.ts
+    │   ├───logos.ts
+    │   ├───projects.ts
+    │   ├───services.ts
+    │   ├───skills.ts
+    │   ├───studies.ts
+    │   ├───tags.ts
+    │   ├───testimonials.ts
+    │   └───work.ts
+    ├───layouts/...
+    ├───lib/...
+    ├───pages/...
+    └───styles/...
 
--   `src/pages`: Contains the pages of the website.
--   `src/components`: Contains reusable components.
--   `src/layouts`: Contains the layouts for the pages.
--   `src/content`: Contains the content for the blog.
--   `src/data`: Contains the data for the website (e.g., work experience, projects, etc.).
--   `public`: Contains static assets (e.g., images, fonts, etc.).
+```
+
 
 ## 🔧 Development
 
