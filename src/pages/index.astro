@@ -3,13 +3,15 @@ import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets"; 
+import profilePick from "@assets/images/2021-headshot_tian-yu2055.jpeg"; 
 
 // Fetch blog posts safely
 let recentPosts = [];
 try {
   const posts = await getCollection("blog");
   const sortedPosts = posts.sort(
-    (a, b) => new Date(b.data.pubDatetime).valueOf() - new Date(a.data.pubDatetime).valueOf()
+    (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
   );
   recentPosts = sortedPosts.slice(0, 3);
 } catch (e) {
@@ -22,53 +24,99 @@ try {
 
   <main id="main-content" class="use-utility-layout max-w-6xl mx-auto px-4">
     
-    <!-- SECTION 1: HERO -->
+<!-- SECTION 1: HERO (Updated Layout) -->
     <section id="hero" class="pt-24 pb-16">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-6 text-skin-base tracking-tight leading-tight">
-        Bridging Sensory Science <br class="hidden sm:block" />& Artificial Intelligence.
-      </h1>
-      <p class="text-lg mb-10 text-skin-muted leading-relaxed max-w-2xl">
-        I help F&B and CPG companies assess digital readiness and discover opportunities through authentic consumer insights. 
-        <span class="block mt-2 font-medium text-skin-base">No hype, just grounded science.</span>
-      </p>
       
-      <div class="flex flex-wrap gap-4">
-        <a href="mailto:your-email@example.com" 
-           class="px-6 py-3 bg-skin-accent text-skin-inverted rounded-md font-medium hover:opacity-90 transition shadow-sm">
-           Contact Me
-        </a>
-        <a href="https://linkedin.com/in/yourprofile" 
-           target="_blank"
-           class="px-6 py-3 border border-skin-line text-skin-base rounded-md font-medium hover:bg-skin-card-muted transition">
-           LinkedIn
-        </a>
-      </div>
-    </section>
-
-    <hr class="border-skin-line my-12 opacity-50" />
-
-    <!-- SECTION 2: SERVICES -->
-    <section id="services" class="py-8">
-      <h2 class="text-2xl font-bold mb-8 text-skin-base">Consulting Services</h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 rounded-xl border border-skin-line bg-skin-card hover:border-skin-accent transition-colors duration-300">
-          <h3 class="text-lg font-bold mb-3 text-skin-accent">AI Readiness</h3>
-          <p class="mb-4 text-sm text-skin-muted leading-relaxed">
-            Navigating the noise of AI services specifically for the Food & Beverage industry. 
+      <!-- Grid Container: 1 column on mobile, 2 columns on desktop -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        
+        <!-- LEFT COLUMN: Text -->
+        <div class="order-2 md:order-1">
+          <h1 class="text-4xl sm:text-5xl font-bold mb-6 text-skin-base tracking-tight leading-tight">
+            Smart Data. <br />
+            Authentic Insights. <br />
+            Scientific Growth.
+          </h1>
+          <p class="text-lg text-skin-muted leading-relaxed max-w-xl">
+            I help Sensory and R&D teams embrace digital transformation, discover unmet 
+            consumer needs through AI, and validate innovation with precision analytics.
           </p>
         </div>
 
-        <div class="p-6 rounded-xl border border-skin-line bg-skin-card hover:border-skin-accent transition-colors duration-300">
-          <h3 class="text-lg font-bold mb-3 text-skin-accent">Sensory Insights</h3>
-          <p class="mb-4 text-sm text-skin-muted leading-relaxed">
-            Discover opportunities from authentic consumer languages and behavior science.
-          </p>
+        <!-- RIGHT COLUMN: Image + Buttons -->
+        <div class="order-1 md:order-2 flex flex-col items-center justify-center">
+          
+          <div class="relative w-48 h-48 sm:w-64 sm:h-64 mb-8 rounded-full overflow-hidden border-4 border-skin-card shadow-2xl">
+            <Image
+              src={profilePick}
+              alt="Tian Yu"
+              class="block !w-full !h-full object-cover"
+              style="object-position: 40% 8%;"
+            />
+          </div>
+
+          <!-- Buttons (Moved below image) -->
+          <div class="flex flex-wrap justify-center gap-4 w-full">
+            <a href="mailto:tian.yu.hank@gmail.com" 
+               class="px-8 py-3 border border-skin-line text-skin-base rounded-full font-medium hover:bg-skin-card-muted transition text-center">
+               Contact Me
+            </a>
+            <a href="https://linkedin.com/in/tianyu1037" 
+               target="_blank"
+               class="px-8 py-3 border border-skin-line text-skin-base rounded-full font-medium hover:bg-skin-card-muted transition text-center">
+               LinkedIn
+            </a>
+          </div>
+
         </div>
+
       </div>
     </section>
 
-    <hr class="border-skin-line my-12 opacity-50" />
+    <!-- SECTION 2: SERVICES (3 Pillars) -->
+    <section id="services" class="py-12">
+      <h2 class="text-3xl font-bold mb-10 text-skin-base text-center sm:text-left">
+        Consulting Services
+      </h2>
+
+      <!-- Grid layout for services -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Pillar 1: AI & Tech -->
+        <div class="p-6 rounded-xl border border-skin-line bg-skin-card hover:border-skin-accent transition-colors duration-300 flex flex-col">
+          <h3 class="text-lg font-bold mb-3 text-skin-accent tracking-tight">AI Readiness</h3>
+          <p class="mb-4 text-sm text-skin-muted leading-relaxed flex-grow">
+            Assess your digital maturity and navigate the noise of AI tools. I help you choose the right technology for F&B applications.
+          </p>
+          <div class="mt-4 pt-4 border-t border-skin-line opacity-50 text-xs font-mono uppercase tracking-wide">
+            Digital Transformation
+          </div>
+        </div>
+
+        <!-- Pillar 2: Sensory Science -->
+        <div class="p-6 rounded-xl border border-skin-line bg-skin-card hover:border-skin-accent transition-colors duration-300 flex flex-col">
+          <h3 class="text-lg font-bold mb-3 text-skin-accent tracking-tighter">Consumer Decoding</h3>
+          <p class="mb-4 text-sm text-skin-muted leading-relaxed flex-grow">
+            Deep dive into sensory drivers in the authentic consumer language. Move beyond basic testing to understand the 'Why' behind preferences.
+          </p>
+          <div class="mt-4 pt-4 border-t border-skin-line opacity-50 text-xs font-mono uppercase tracking-wide">
+            Consumer Science
+          </div>
+        </div>
+
+        <!-- Pillar 3: Advanced Analytics -->
+        <div class="p-6 rounded-xl border border-skin-line bg-skin-card hover:border-skin-accent transition-colors duration-300 flex flex-col">
+          <h3 class="text-lg font-bold mb-3 text-skin-accent tracking-tight">Precision Science</h3>
+          <p class="mb-4 text-sm text-skin-muted leading-relaxed flex-grow">
+            De-risk your innovation with high-level analytics. I translate complex sensory and behavioral data into the precise evidence needed for confident decision-making.
+          </p>
+          <div class="mt-4 pt-4 border-t border-skin-line opacity-50 text-xs font-mono uppercase tracking-wide">
+            Scientific Validation
+          </div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- SECTION 3: CASE STUDIES -->
     <section id="recent-posts" class="pb-24">
