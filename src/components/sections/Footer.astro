@@ -1,5 +1,6 @@
 ---
 import contactIconRaw from "../../assets/icons/contact-icon.svg?raw";
+import linkedinIconRaw from "../../assets/icons/linkedin-blog-post-shareicon.svg?raw";
 import Button from "../ui/button/Button.astro";
 
 function sanitizeToWhite(svg: string, size = 18) {
@@ -15,6 +16,7 @@ function sanitizeToWhite(svg: string, size = 18) {
 }
 
 const contactIcon = sanitizeToWhite(contactIconRaw);
+const linkedinIcon = sanitizeToWhite(linkedinIconRaw);
 const year = new Date().getFullYear();
 
 // Update these (placeholders are fine for now)
@@ -28,23 +30,22 @@ const email = "hello@yourdomain.com";
   </h2>
 
   <p class="mt-2 text-[color:var(--color-text-muted)] max-w-2xl mx-auto">
-    Share your goal, timeline, and what data you have (sensory, consumer, reviews, or biometrics).
-    I'll respond with suggested next steps and a clear scope. (Placeholder)
+    Share your goal, timeline, and what data you have (sensory, consumer, reviews, or physiological).
+    I'll respond with suggested next steps and a clear scope. No obligations.
   </p>
 
-  <div class="mt-6 flex justify-center gap-3 flex-wrap">
+  <!-- Contact Button -->
     <Button href="/contact" variant="secondary" size="md">
-      <span class="inline-flex" aria-hidden="true" set:html={contactIcon} />
+      <span class="inline-flex mr-1" aria-hidden="true" set:html={contactIcon} />
       Contact
     </Button>
 
-    <a class="sw-btn-sm" href={linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+    <!-- LinkedIn Button (Now styled exactly like Contact) -->
+    <Button href={linkedinUrl} variant="secondary" size="md" target="_blank" rel="noopener noreferrer">
+      <span class="inline-flex mr-2" aria-hidden="true" set:html={linkedinIcon} />
       LinkedIn
-    </a>
-
-    <a class="sw-btn-sm" href={`mailto:${email}`} aria-label="Email">
-      {email}
-    </a>
+    </Button>
+    
   </div>
 
   <div class="mt-8 text-sm text-[color:var(--color-text-muted)]">
