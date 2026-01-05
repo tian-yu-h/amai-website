@@ -11,7 +11,7 @@
   --gray: 171, 178, 191;
   --gray-light: 40, 44, 52;
   --gray-dark: 220, 223, 228;
-  --background: #050505;
+  --background: #18181b;
 
   /* Semantic Color Tokens */
   --color-text-primary: rgb(var(--black));
