@@ -5,8 +5,8 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://tian-yu-h.github.io',
-  base: '/amai-website/',
+  site: 'https://www.amaiconsulting.com',
+  base: '/',
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
