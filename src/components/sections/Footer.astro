@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
 
 // Update these (placeholders are fine for now)
 const linkedinUrl = "https://www.linkedin.com/in/tianyu1037/";
-const email = "hello@yourdomain.com";
+const email = "tian.yu.hank@gmail.com";
 ---
 
 <footer id="contact" class="py-12 px-4 text-center">
@@ -35,10 +35,10 @@ const email = "hello@yourdomain.com";
   </p>
 
   <!-- Contact Button -->
-    <Button href="/contact" variant="secondary" size="md">
-      <span class="inline-flex mr-1" aria-hidden="true" set:html={contactIcon} />
+    <Button href={`mailto:tian.yu.hank@gmail.com`} variant="secondary" size="md">
+      <span class="inline-flex mr-2" aria-hidden="true" set:html={contactIcon} />
       Contact
-    </Button>
+    </Button> 
 
     <!-- LinkedIn Button (Now styled exactly like Contact) -->
     <Button href={linkedinUrl} variant="secondary" size="md" target="_blank" rel="noopener noreferrer">

@@ -6,7 +6,6 @@ import Footer from '../components/sections/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/sections/Header.astro';
 import PostMeta from '../components/ui/meta/PostMeta.astro';
-import ShareButtons from '../components/ui/share/ShareButtons.astro';
 import PostNav from '../components/ui/nav/PostNav.astro';
 
 type BlogData = CollectionEntry<'blog'>['data'];
@@ -122,7 +121,7 @@ const { title, description, pubDate, updatedDate, heroImage, showHeader = true, 
                             <hr />
                         </div>
                     )}
-                    <ShareButtons title={title} url={Astro.url.toString()} />
+                    {/*<ShareButtons title={title} url={Astro.url.toString()} /> */}
 					<PostMeta pubDate={pubDate} readingTimeMin={readingTimeMin} authorName={Astro.props.author || 'Tian Yu'} />
                     <slot />
                     <PostNav prev={prevPost} next={nextPost} />

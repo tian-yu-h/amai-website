@@ -2,17 +2,27 @@
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import { getCollection } from "astro:content";
 import { Image } from "astro:assets"; 
 import profilePick from "@assets/images/2021-headshot_tian-yu2055.jpeg"; 
 
-// Fetch blog posts safely
-let recentPosts = [];
+// 1. Import the Type from Astro
+import { getCollection, type CollectionEntry } from "astro:content";
+
+// 2. Tell TypeScript exactly what this array contains
+let recentPosts: CollectionEntry<"blog">[] = [];
+
 try {
   const posts = await getCollection("blog");
-  const sortedPosts = posts.sort(
-    (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
-  );
+  
+  // 3. Filter out drafts and sort by date
+  const sortedPosts = posts
+    .filter(post => !post.data.draft)
+    .sort((a, b) => {
+       const dateA = new Date(a.data.pubDate).valueOf();
+       const dateB = new Date(b.data.pubDate).valueOf();
+       return dateB - dateA; // Newest first
+    });
+
   recentPosts = sortedPosts.slice(0, 3);
 } catch (e) {
   console.log("No blog posts found yet.");
@@ -122,19 +132,26 @@ try {
     <section id="recent-posts" class="pb-24">
       <div class="flex justify-between items-baseline mb-8">
         <h2 class="text-2xl font-bold text-skin-base">Case Studies</h2>
-        <a href="/blog" class="text-sm font-semibold text-skin-accent hover:underline decoration-2 underline-offset-4">
+        
+        <!-- FIX: Using import.meta.env.BASE_URL ensures this works on GitHub -->
+        <a href={`${import.meta.env.BASE_URL}blog/`} class="text-sm font-semibold text-skin-accent hover:underline decoration-2 underline-offset-4">
           View All &rarr;
         </a>
       </div>
-      <!-- Case Study List Code Here (Same as before) -->
+
       <div class="space-y-6">
         {recentPosts.length > 0 ? (
           recentPosts.map((post) => (
-            <a href={`/blog/${post.slug}/`} class="group block">
+            /* FIX 1: Changed post.slug to post.id */
+            /* FIX 2: Added ${import.meta.env.BASE_URL} to the link */
+            <a href={`${import.meta.env.BASE_URL}blog/${post.id}/`} class="group block">
               <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-skin-line group-hover:border-skin-accent transition-colors">
                 <h3 class="text-lg font-medium text-skin-base group-hover:text-skin-accent transition-colors">
                   {post.data.title}
                 </h3>
+                <span class="text-sm text-skin-muted mt-2 sm:mt-0 font-mono">
+                  {new Date(post.data.pubDate).toLocaleDateString(undefined, { year: 'numeric', month: 'short' })}
+                </span>
               </div>
             </a>
           ))
