@@ -1,49 +1,96 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/sections/Footer.astro';
 import Header from '../../components/sections/Header.astro';
-import BlogHero from '../../components/sections/BlogHero.astro';
-import BlogAllArticles from '../../components/sections/BlogAllArticles.astro';
-import BlogPagination from '../../components/ui/nav/BlogPagination.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import FeaturedPost from '../../components/ui/card/FeaturedPost.astro';
-import { calculateReadingTimeFromHtml } from '../../lib/reading';
 
-const PAGE_SIZE = 6;
-const posts = (await getCollection('blog')).sort((a,b)=>+b.data.pubDate-+a.data.pubDate);
-const [featured, ...rest] = posts;
-const firstPagePosts = rest.slice(0, PAGE_SIZE);
-const totalPages = Math.max(1, Math.ceil(rest.length / PAGE_SIZE));
-let featuredReading = 0;
-if (featured) {
-  const { Content } = await render(featured);
-  const html = await Astro.slots.render('default');
-  featuredReading = calculateReadingTimeFromHtml(html ?? '');
-}
+// 1. Fetch and sort posts using 'id'
+const allPosts = await getCollection('blog');
+const posts: CollectionEntry<'blog'>[] = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
+
+// 2. Safely handle the Base URL for GitHub Pages
+const base = import.meta.env.BASE_URL.endsWith('/') 
+  ? import.meta.env.BASE_URL 
+  : `${import.meta.env.BASE_URL}/`;
 ---
 
 <!doctype html>
 <html lang="en" data-theme="dark" class="dark">
 	<head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    {totalPages > 1 && (
-      <link rel="next" href={`/blog/page/2/`} />
-    )}
+    <BaseHead title={`Case Studies | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
-	<body>
+	<body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans antialiased">
         <Header />
-        <BlogHero title="Blog" subtitle="Practical insights on data analysis, visualization, and getting more from your analytics tools." />
-        <main class="use-utility-layout mx-auto max-w-5xl px-3 py-5 space-y-7">
-            {featured && (
-              <section class="card-surface p-4 md:p-5 hover-lift sw-featured-card">
-                <FeaturedPost post={featured} readingTimeMin={featuredReading} />
-              </section>
-            )}
+        
+        <main id="main-content" class="max-w-4xl mx-auto px-6 pt-16 pb-24">
+            
+            <!-- CLEAN HEADER -->
+            <header class="mb-16">
+              <h1 class="text-3xl font-bold tracking-tight mb-4 text-skin-base">Case Studies</h1>
+              <p class="text-skin-muted max-w-2xl leading-relaxed text-lg italic">
+                {SITE_DESCRIPTION}
+              </p>
+            </header>
 
-            <BlogAllArticles posts={firstPagePosts} />
-            <BlogPagination currentPage={1} totalPages={totalPages} />
+            <!-- THE LIST: Using 'post.id' to fix the redline -->
+            <section class="space-y-12">
+               {posts.map((post) => {
+                const slug = post.id.replace(/\.[^/.]+$/, "");
+                const postUrl = `${base}blog/${slug}/`;
+
+                return (
+                  <article class="group border-b border-skin-line pb-12 last:border-0">
+                    
+                    <!-- 1. FEATURED BADGE: Moved above the title -->
+                    {post.data.featured && (
+                      <div class="mb-3">
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-skin-accent border border-skin-accent/40 px-2 py-1 rounded-sm bg-skin-accent/5">
+                          Featured Research
+                        </span>
+                      </div>
+                    )}
+
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between w-full gap-4 mb-4">
+                      <!-- 2. TITLE: Smaller (text-xl) and cleaner line height -->
+                      <h2 class="text-2xl font-bold text-skin-base group-hover:text-skin-accent transition-colors leading-tight tracking-tight">
+                        <a href={postUrl} class="no-underline">
+                          {post.data.title}
+                        </a>
+                      </h2>
+                      
+                      <time class="text-sm font-mono text-skin-muted whitespace-nowrap opacity-80">
+                        {new Date(post.data.pubDate).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'short' 
+                        })}
+                      </time>
+                    </div>
+
+                    <p class="text-skin-muted text-base leading-relaxed mb-6 max-w-3xl">
+                      {post.data.description}
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 mb-6">
+                      {post.data.tags?.map((tag) => (
+                        <span class="text-[11px] font-medium text-skin-muted uppercase tracking-wider opacity-60">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <a href={postUrl} class="text-sm font-bold text-skin-accent hover:underline decoration-2 underline-offset-8">
+                      View Case Study &rarr;
+                    </a>
+                  </article>
+                );
+              })}
+            </section>
+
         </main>
+        
         <Footer />
 	</body>
 </html>

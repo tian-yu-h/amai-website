@@ -56,13 +56,21 @@ try {
         <!-- RIGHT COLUMN: Image + Buttons -->
         <div class="order-1 md:order-2 flex flex-col items-center justify-center">
           
-          <div class="relative w-48 h-48 sm:w-64 sm:h-64 mb-8 rounded-full overflow-hidden border-4 border-skin-card shadow-2xl">
+          <div class="relative w-48 h-48 sm:w-64 sm:h-64 mb-4 rounded-full overflow-hidden border-4 border-skin-card shadow-2xl">
             <Image
               src={profilePick}
               alt="Tian Yu"
               class="block !w-full !h-full object-cover"
               style="object-position: 40% 8%;"
             />
+          </div>
+
+          <!-- Name and Role -->
+          <div class="text-center mb-6">
+            <h2 class="text-xl font-bold text-skin-base tracking-tight">Tian Yu, Ph.D.</h2>
+            <p class="text-lg text-skin-muted mt-0.5 leading-snug">
+              Sensory Consumer Science & AI Strategy
+            </p>
           </div>
 
           <!-- Buttons (Moved below image) -->
