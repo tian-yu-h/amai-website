@@ -1,7 +1,6 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 
-// 1. Define the props (inputs) this layout accepts
 interface Props {
   title?: string;
   description?: string;
@@ -11,15 +10,34 @@ const { title = "Amai Consulting", description = "Sensory Science & AI Readiness
 ---
 
 <!doctype html>
-<html lang="en">
+<!-- FIX 1: Set class="dark" by default -->
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <!-- 2. Use the existing BaseHead component for SEO/Fonts -->
     <BaseHead title={title} description={description} />
-  </head>
-  <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans antialiased">
+
+    <!-- FIX 2: Add the Theme Detection Script -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return 'dark'; // Default to dark for new visitors
+      })();
     
-    <!-- 3. The <slot /> is where your page content gets injected -->
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+      window.localStorage.setItem('theme', theme);
+    </script>
+  </head>
+
+  <!-- FIX 3: Clean up the body classes -->
+  <!-- bg-slate-950 or bg-black ensures a deep dark background -->
+  <body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased">
+    
     <slot />
     
   </body>
